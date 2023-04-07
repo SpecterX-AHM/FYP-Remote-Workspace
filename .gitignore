@@ -1,0 +1,5 @@
+/react-app/node_modules
+/react-app/.env
+
+/server/node_modules
+/server/.env
