@@ -1,0 +1,97 @@
+.teamchat{
+    display: flex;
+    flex-direction: column;
+    flex: 0.7;
+    min-height: 60vh;
+    max-height: 60vh;
+}
+
+.teamchat__header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+    height: 40px;
+    
+}
+
+.teamchat__headerInfo{
+    flex: 1;
+    padding-left: 20px;
+}
+
+.teamchat__headerInfo > h4{
+    font-weight: 500;
+    margin: 0 !important;
+}
+
+.teamchat__headerInfo > p{
+    color: gray;
+    text-overflow: ellipsis;
+    margin: 0 !important;
+}
+
+
+
+.teamchat__body{
+    flex: 1;
+    overflow-y: auto;
+   
+}
+
+.teamchat__message{
+    position: relative;
+    font-size: 16px;
+    padding: 10px;
+    width: fit-content;
+    border-radius: 7.5px;
+    background-color: #ffffff;
+    margin: 30px;
+    box-shadow: 0 1px .5px rgba(0,0,0,.13);
+    color: black;
+}
+
+.teamchat__receiver{
+    margin-left: auto;
+    background-color: #dcf8c6;
+}
+
+.teamchat__timestamp{
+    margin-left: 10px;
+    font-size: xx-small;
+    vertical-align: text-bottom;
+}
+
+.teamchat__name{
+    vertical-align: text-top;
+    font-weight: 800;
+    font-size: xx-small;
+}
+
+.teamchat__footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+    border-top: 1px solid lightgray;
+}
+
+.teamchat__footer > input{
+    flex: 1;
+    border-radius: 21px;
+    padding: 12px;
+    border: none;
+    outline-width: 0;
+}
+
+.teamchat__footer > .MuiSvgIcon-root{
+    padding: 10px;
+    color: gray;
+}
+.emoji-mart-scroll{
+    height: 235px;
+}
+
+.emoji-mart-preview{
+    display: none;
+}

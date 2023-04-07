@@ -1,0 +1,29 @@
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    flex: 0.3;
+}
+
+.sidebar__header{
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    border-bottom: 1px solid gray;
+}
+
+.sidebar__headerRight{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.sidebar__headerRight > .MuiSvgIcon-root{
+    margin-right: 2vw;
+    font-size: 24px !important;
+}
+
+.sidebar__chats{
+    flex: 1;
+    overflow-y: scroll;
+}

@@ -1,0 +1,41 @@
+
+
+.main-text {
+
+    
+    background-size: 100% 200%;
+    background-position: 10% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 16px;
+    padding-bottom: 12px;
+    font-size: 35px;
+    font-weight: 600;
+}
+
+
+.main-heading {
+  
+    letter-spacing: 2px;
+	text-align: left;
+	
+    background: #2dbdc3;
+	-webkit-background-clip: text;
+   background-clip: text;
+	-webkit-text-fill-color: transparent;
+    font-size: 4rem;
+    font-weight: 600;
+    animation: shine 1s linear infinite;
+}
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+ 
+
+
+  
+  
+  
