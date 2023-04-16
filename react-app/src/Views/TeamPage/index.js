@@ -13,6 +13,7 @@ import { APIBaseURL } from '../../constants';
 const TeamPage = (props) => {
   const [teams, setTeams] = useState([]);
   const { auth } = props;
+  console.log(props);
   const classes = useStyles();
   console.log(teams);
   useEffect(() => {

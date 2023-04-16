@@ -80,35 +80,29 @@ const MeetHistory = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {meetings && meetings.map((item) => {
-
-                  return (
-
-
-                    <tr>
-
-                      <td>{item.name}</td>
-                      <td>{item.createdAt.slice(0, 10)}</td>
-                      <td>{item.host[0].name}</td>
-                      <td><CsvDownload data={item.members} filename="attendance.csv" style={{ //pass other props, like styles
-                        boxShadow: "inset 0px 1px 0px 0px #14a2b8",
-                        background: "linear-gradient(to bottom, #14a2b8 5%, #14a2b8 100%)",
-                        backgroundColor: "#14a2b8",
-                        borderRadius: "6px",
-                        border: "1px solid #14a2b8",
-                        display: "inline-block",
-                        cursor: "pointer", "color": "#ffffff",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-                        padding: "6px 10px",
-                        textDecoration: "none",
-                        textShadow: "0px 1px 0px #14a2b8"
-                      }}> Download</CsvDownload></td>
+              {meetings && meetings.map((item) => {
+                return (
+                    <tr key={item.id}>
+                        <td>{item.name || ''}</td>
+                        <td>{item.createdAt ? item.createdAt.slice(0, 10) : ''}</td>
+                        <td>{(item.host && item.host.length > 0 && item.host[0].name) || ''}</td>
+                        <td><CsvDownload data={item.members} filename="attendance.csv" style={{ //pass other props, like styles
+                          boxShadow: "inset 0px 1px 0px 0px #14a2b8",
+                          background: "linear-gradient(to bottom, #14a2b8 5%, #14a2b8 100%)",
+                          backgroundColor: "#14a2b8",
+                          borderRadius: "6px",
+                          border: "1px solid #14a2b8",
+                          display: "inline-block",
+                          cursor: "pointer", "color": "#ffffff",
+                          fontSize: "15px",
+                          fontWeight: "bold",
+                          padding: "6px 10px",
+                          textDecoration: "none",
+                          textShadow: "0px 1px 0px #14a2b8"
+                        }}> Download</CsvDownload></td>      
                     </tr>
-
                   )
                 })}
-
               </tbody>
             </table>
           </>

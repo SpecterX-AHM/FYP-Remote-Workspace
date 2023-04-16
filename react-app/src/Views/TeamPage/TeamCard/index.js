@@ -17,15 +17,14 @@ const useStyles = makeStyles((theme) => ({
 
 const TeamCard = (props) => {
 const team= props.team;
-console.log("hi i am team card component:");
 console.log(props.team);
 const classes = useStyles();
   return(
       <>
        <div className=" card col-md-6 col-lg-2 ">
       
-         <div class="icon"> <Avatar variant="rounded" className={classes.rounded} style={{minHeight:"50px",minWidth:"50px"}}>{team.name.charAt(0)}</Avatar></div>
-         <Link to= {`/teamview?teamid=${team._id}`}  >
+         <div className="icon"> <Avatar variant="rounded" className={classes.rounded} style={{minHeight:"50px",minWidth:"50px"}}>{team.name.charAt(0)}</Avatar></div>
+         <Link to= {`/teamview?teamid=${team.id}`}  >
     <h6 class="title" >{team.name}</h6>
          </Link>
          </div>

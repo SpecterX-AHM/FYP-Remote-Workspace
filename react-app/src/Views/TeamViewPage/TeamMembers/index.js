@@ -13,6 +13,10 @@ import { useLocation } from "react-router-dom";
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import IconButton from '@material-ui/core/IconButton';
 import copy from "copy-to-clipboard";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
+
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -58,86 +62,105 @@ const Members = (props) => {
 
   //store team members
   const [membersList, setMembersList] = useState({})
+  const [onlineMembers, setOnlineMembers] = useState([]);
+  const [listeners, setListeners] = useState([]);
 
   //get query parameter
   const search = useLocation().search;
   const params = new URLSearchParams(search);
   const teamid = params.get("teamid")
+  console.log(teamid);
+  
+   //fetch users with their online/offline status from firestore
+  const fetchUsers = async () => {
+    const querySnapshot = await db.collection('teams').doc(teamid);
+    const doc = await querySnapshot.get();
+    const memberIds = doc.data().members;
+    const promises = memberIds.map((id) => {
+      return new Promise((resolve) => {
+        const unsubscribe = db.collection('users')
+          .doc(id)
+          .onSnapshot((doc) => {
+            const data = doc.data();
+            setMembersList((oldState) => ({ ...oldState, [doc.id]: data }));
+            if (data.isActive) {
+              setOnlineMembers((oldState) => [...oldState, id]);
+            } else {
+              setOnlineMembers((oldState) =>
+                oldState.filter((memberId) => memberId !== id)
+              );
+            }
+            resolve();
+          });
+        setListeners((oldListeners) => [...oldListeners, unsubscribe]); // add the listener to state
+      });
+    });
 
-  //fetch users with their online/offline status from firestore
-  const fetchUsers = async (props) => {
+    await Promise.all(promises);
+    // all users have been fetched
+  };
 
-    const querySnapshot = await db.collection('teams').doc(teamid)
-    querySnapshot.get().then(async (doc) => {
-      const memberIds = doc.data().members;
-
-      //.onSnapshot used for realtime update
-      memberIds.map(
-        (id) => {
-          return new Promise(resolve => {
-            db.collection('users').doc(id).onSnapshot(async (doc) => {
-              setMembersList((oldState) => ({ ...oldState, [doc.id]: doc.data() }))
-            })
-          })
-        }
-      )
-    })
-  }
   useEffect(() => {
     fetchUsers();
-  }, [])
+    return () => {
+      // unsubscribe from all listeners when component unmounts
+      listeners.forEach((unsubscribe) => unsubscribe());
+    };
+  }, []);
 
   const copyHandler = () => {
     copy(props.code);
   }
-  return (
-    <List className={classes.list} >
-      <div className="d-flex justify-content-center ">
-        <h4>Members</h4>
-      </div>
-      <hr color="#333333"></hr>
-      <div className="d-flex justify-content-end">
-        <h6>Add Member : {props.code} <IconButton onClick={copyHandler}> < FileCopyOutlinedIcon /> </IconButton></h6>
-      </div>
-      {Object.values(membersList).map(item => {
-        return (
-          <>
-            {item.isActive}
-            <ListItem alignItems="flex-end">
-              <ListItemAvatar>
-                {item.isActive ?
-                  <StyledBadge
-                    overlap="circle"
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'right',
-                    }}
-                    variant="dot"
-                    color="primary">
-                    <Avatar alt={item.name} src={item.picture} />
-                  </StyledBadge> :
-                  <StyledBadge
-                    overlap="circle"
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'right',
-                    }}
-                    variant="dot"
-                    color="secondary">
-                    <Avatar alt={item.name} src={item.picture} />
-                  </StyledBadge>
-                }
-              </ListItemAvatar>
-              {item.isActive ? <ListItemText primary={item.name} secondary="Online" /> : <ListItemText primary={item.name} secondary="Offline" />}
-            </ListItem>
-            <Divider variant="inset" component="li" />
-          </>
-        )
-      })}
 
-    </List>
+return (
+  <List className={classes.list} >
+    <div className="d-flex justify-content-center ">
+      <h4>Members</h4>
+    </div>
+    <hr color="#333333"></hr>
+    <div className="d-flex justify-content-end">
+      <h6>Add Member : {props.code} <IconButton onClick={copyHandler}> < FileCopyOutlinedIcon /> </IconButton></h6>
+    </div>
 
-  )
+    {Object.values(membersList).map(item => {
+      return (
+        <>
+          {item.isActive}
+          <ListItem alignItems="flex-end">
+            <ListItemAvatar>
+              {item.isActive ?
+                <StyledBadge
+                  overlap="circle"
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  variant="dot"
+                  color="primary">
+                  <Avatar alt={item.name} src={item.picture} />
+                </StyledBadge> :
+                <StyledBadge
+                  overlap="circle"
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  variant="dot"
+                  color="secondary">
+                  <Avatar alt={item.name} src={item.picture} />
+                </StyledBadge>
+              }
+
+            </ListItemAvatar>
+            {item.isActive ? <ListItemText primary={item.name} secondary="Online" /> : <ListItemText primary={item.name} secondary="Offline" />}
+
+          </ListItem>
+          <Divider variant="inset" component="li" />
+        </>
+      )
+    })}
+  </List>
+)
 }
 
 export default Members

@@ -71,6 +71,7 @@ function a11yProps(index) {
 
 const ViewPage = (props) => {
   const { auth } = props;
+  console.log(props);
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [createopen, setCreateOpen] = useState(false);
@@ -80,7 +81,9 @@ const ViewPage = (props) => {
   const [teamname, setTeamName] = useState('');
   const [description, setDescription] = useState('');
   const [code, setCode] = useState('');
+  const [meeturl, setMeetUrl] = useState('');
 
+  
   const handleCreateClickOpen = () => {
     setCreateOpen(true);
   };
@@ -123,12 +126,7 @@ const ViewPage = (props) => {
     setCreateOpen(false);
   }
   const joinHandler = async () => {
-    if (roomid === "") {
-      alert("Enter Code")
-    } else {
-      window.open(`/teammeet?room=${roomid}`)
-      setJoinOpen(false);
-    }
+    window.open(`${meeturl}`)
   }
 
   //fetch teams which are created or joined by user
@@ -140,7 +138,7 @@ const ViewPage = (props) => {
       })
 
       const team = response.data.team;
-      console.log(team);
+      console.log(team)
       const name = team.name
       const desp = team.description
       const code = team.code
@@ -160,6 +158,8 @@ const ViewPage = (props) => {
     });
 
   }, []);
+  
+  
 
   // Delete Team
   const deleteTeam = async () => {
@@ -198,7 +198,7 @@ const ViewPage = (props) => {
             variant="scrollable"
             scrollButtons="on"
             indicatorColor="primary"
-            textColor="#fffff"
+            textColor="inherit"
           >
 
             <Tab label="Chat" icon={<ChatIcon />} {...a11yProps(0)} />
@@ -265,11 +265,11 @@ const ViewPage = (props) => {
             <TextField
               autoFocus
               margin="dense"
-              id="code"
-              label="Enter Code"
-              type="text"
-              value={roomid}
-              onChange={(e) => { setRoomid(e.target.value) }}
+              id="meeturl"
+              multiline
+              label="Enter Meet URL"
+              value={meeturl}
+              onChange={(e) => setMeetUrl(e.target.value)}
               fullWidth
             />
           </DialogContent>

@@ -68,7 +68,7 @@ const handleCode = (event) => {
           id="standard-multiline-flexible"
           label="Enter Code"
           multiline
-          rowsMax={4}
+          maxRows={4}
           value={code}
           fullWidth
           onChange={handleCode}
