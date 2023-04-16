@@ -52,7 +52,7 @@ const HomePage = (props) => {
                 id="meetname"
                 label="Enter Meet Name"
                 multiline
-                rowsMax={4}
+                maxRows={4}
                 value={meetname}
                 onChange={handleMeetName}
                 color="primary"
@@ -64,7 +64,7 @@ const HomePage = (props) => {
                 id="meeturl"
                 label="Enter Meet URL"
                 multiline
-                rowsMax={4}
+                maxRows={4}
                 value={value}
                 onChange={handleChange}
                 color="secondary"
