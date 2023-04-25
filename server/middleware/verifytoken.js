@@ -7,7 +7,7 @@ var serviceAccount = {
   type: process.env.REACT_APP_type,
   project_id: process.env.REACT_APP_project_id,
   private_key_id: process.env.REACT_APP_private_key_id,
-  private_key: process.env.REACT_APP_private_key,
+  private_key: process.env.REACT_APP_private_key.replace(/\\n/g, '\n'),
   client_email: process.env.REACT_APP_client_email,
   client_id: process.env.REACT_APP_client_id,
   auth_uri: process.env.REACT_APP_auth_uri,
