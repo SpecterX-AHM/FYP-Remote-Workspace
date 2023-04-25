@@ -1,5 +1,6 @@
 /react-app/node_modules
 /react-app/.env
+/react-app/build
 
 /server/node_modules
 /server/.env
